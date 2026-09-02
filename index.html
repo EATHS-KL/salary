@@ -27,40 +27,30 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid #eaecef;
         }
-        h2 {
+        
+        /* Header Layout */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 12px;
+        }
+        .app-header h2 {
             font-size: 20px;
             font-weight: 600;
             color: #1b1f23;
-            margin-bottom: 24px;
-            text-align: center;
         }
-        
-        /* Sleek Settings Card */
-        .settings-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #eaecef;
-            margin-bottom: 20px;
+        .settings-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
-        .settings-card label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #586069;
-        }
-        .settings-card input {
-            padding: 6px 12px;
-            border: 1px solid #d1d5da;
-            border-radius: 6px;
-            font-size: 14px;
-            width: 120px;
-            outline: none;
-            transition: 0.2s;
-        }
-        .settings-card input:focus {
-            border-color: #0366d6;
-            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+        .settings-btn:hover {
+            transform: rotate(45deg);
         }
 
         /* Smart Dashboard */
@@ -83,6 +73,10 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         .stat-card p {
             font-size: 16px;
@@ -96,6 +90,19 @@
         }
         .stat-card.total-salary h4 { color: #166534; }
         .stat-card.total-salary p { color: #15803d; font-size: 24px; }
+
+        /* Eye Button for Privacy */
+        .eye-btn {
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .eye-btn:hover {
+            background: #dcfce7;
+        }
 
         /* Sleek Actions */
         .action-card {
@@ -112,6 +119,11 @@
             border-radius: 6px;
             font-size: 14px;
             color: #24292e;
+            outline: none;
+        }
+        .date-picker-wrap input:focus {
+            border-color: #0366d6;
+            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
         }
         .btn-group {
             display: flex;
@@ -150,315 +162,4 @@
             font-size: 13px;
         }
         th, td {
-            padding: 12px 8px;
-            text-align: left;
-            border-bottom: 1px solid #eaecef;
-        }
-        th { color: #586069; font-weight: 500; }
-        .badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-        .badge-full { background: #dcffe4; color: #176f2c; }
-        .badge-half { background: #fff5b1; color: #735c0f; }
-        .badge-absent { background: #ffeef0; color: #b31d28; }
-        
-        .edit-btn {
-            background: transparent;
-            border: 1px solid #d1d5da;
-            padding: 4px 10px;
-            border-radius: 4px;
-            color: #0366d6;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .edit-btn:hover {
-            background: #f6f8fa;
-            border-color: #0366d6;
-        }
-
-        /* Edit Modal (Hidden by default) */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 350px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .modal-content h4 {
-            margin-bottom: 16px;
-            font-size: 16px;
-        }
-        .modal-select {
-            width: 100%;
-            padding: 8px 12px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            border: 1px solid #d1d5da;
-            font-size: 14px;
-        }
-        .modal-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-        .btn-cancel {
-            background: white;
-            border: 1px solid #d1d5da;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #24292e;
-        }
-        .btn-save {
-            background: #0366d6;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .btn-delete-record {
-            background: transparent;
-            color: #d73a49;
-            border: none;
-            text-decoration: underline;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 15px;
-            display: block;
-            text-align: center;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>Salary Dashboard</h2>
-
-    <div class="settings-card">
-        <label for="perDayRate">Per Day Salary (₹):</label>
-        <input type="number" id="perDayRate" value="500" onchange="saveRate()">
-    </div>
-
-    <div class="dashboard-grid">
-        <div class="stat-card total-salary">
-            <h4>Total Earned</h4>
-            <p id="totalSalaryDisplay">₹0</p>
-        </div>
-        <div class="stat-card">
-            <h4>Total</h4>
-            <p id="totalCountDisplay">0</p>
-        </div>
-        <div class="stat-card">
-            <h4>Full</h4>
-            <p id="fullDayDisplay" style="color: #2ea043;">0</p>
-        </div>
-        <div class="stat-card">
-            <h4>Half</h4>
-            <p id="halfDayDisplay" style="color: #dbab09;">0</p>
-        </div>
-        <div class="stat-card">
-            <h4>Absent</h4>
-            <p id="absentDisplay" style="color: #d73a49;">0</p>
-        </div>
-    </div>
-
-    <div class="action-card">
-        <div class="date-picker-wrap">
-            <input type="date" id="attendDate">
-        </div>
-        <div class="btn-group">
-            <button class="btn btn-full" onclick="markAttendance('Full Day', 1)">Full Day</button>
-            <button class="btn btn-half" onclick="markAttendance('Half Day', 0.5)">Half Day</button>
-            <button class="btn btn-absent" onclick="markAttendance('Absent', 0)">Absent</button>
-        </div>
-    </div>
-
-    <div class="history-section">
-        <h3>Recent Records</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="attendanceTableBody">
-                <!-- Data populated here -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal-overlay" id="editModal">
-    <div class="modal-content">
-        <h4>Edit Record: <span id="editDateDisplay"></span></h4>
-        <input type="hidden" id="editDateValue">
-        
-        <select class="modal-select" id="editStatusSelect">
-            <option value="Full Day">Full Day</option>
-            <option value="Half Day">Half Day</option>
-            <option value="Absent">Absent</option>
-        </select>
-
-        <div class="modal-actions">
-            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-            <button class="btn-save" onclick="saveEdit()">Save Changes</button>
-        </div>
-
-        <!-- Safe Delete Button -->
-        <button class="btn-delete-record" onclick="safeDelete()">Delete this entry completely</button>
-    </div>
-</div>
-
-<script>
-    const STORAGE_RECORDS = 'pro_salary_records';
-    const STORAGE_RATE = 'pro_salary_rate';
-
-    // Set today's date automatically
-    document.getElementById('attendDate').value = new Date().toISOString().split('T')[0];
-
-    // Load rate
-    let perDayRate = localStorage.getItem(STORAGE_RATE) ? parseFloat(localStorage.getItem(STORAGE_RATE)) : 500;
-    document.getElementById('perDayRate').value = perDayRate;
-
-    function saveRate() {
-        perDayRate = parseFloat(document.getElementById('perDayRate').value) || 0;
-        localStorage.setItem(STORAGE_RATE, perDayRate);
-        updateDashboard();
-    }
-
-    function getRecords() {
-        return JSON.parse(localStorage.getItem(STORAGE_RECORDS)) || [];
-    }
-
-    function saveRecords(records) {
-        localStorage.setItem(STORAGE_RECORDS, JSON.stringify(records));
-        updateDashboard();
-    }
-
-    function markAttendance(type, multiplier) {
-        const dateInput = document.getElementById('attendDate').value;
-        if (!dateInput) return alert('Please select a date!');
-
-        let records = getRecords();
-        const existingIndex = records.findIndex(r => r.date === dateInput);
-        
-        const recordData = { date: dateInput, type: type, multiplier: multiplier };
-
-        if (existingIndex > -1) {
-            records[existingIndex] = recordData;
-        } else {
-            records.push(recordData);
-        }
-
-        records.sort((a, b) => new Date(b.date) - new Date(a.date));
-        saveRecords(records);
-    }
-
-    // -- EDIT & DELETE LOGIC --
-    function openEditModal(date, currentType) {
-        document.getElementById('editDateDisplay').innerText = date;
-        document.getElementById('editDateValue').value = date;
-        document.getElementById('editStatusSelect').value = currentType;
-        document.getElementById('editModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('editModal').style.display = 'none';
-    }
-
-    function saveEdit() {
-        const date = document.getElementById('editDateValue').value;
-        const newType = document.getElementById('editStatusSelect').value;
-        let newMultiplier = 0;
-        
-        if(newType === 'Full Day') newMultiplier = 1;
-        else if(newType === 'Half Day') newMultiplier = 0.5;
-
-        let records = getRecords();
-        const index = records.findIndex(r => r.date === date);
-        if(index > -1) {
-            records[index].type = newType;
-            records[index].multiplier = newMultiplier;
-            saveRecords(records);
-        }
-        closeModal();
-    }
-
-    function safeDelete() {
-        const date = document.getElementById('editDateValue').value;
-        // Confirmation alert box
-        const userConfirmed = confirm("Are you sure you want to permanently delete the entry for " + date + "?");
-        
-        if (userConfirmed) {
-            let records = getRecords();
-            records = records.filter(r => r.date !== date);
-            saveRecords(records);
-            closeModal();
-        }
-    }
-
-    // -- DASHBOARD UPDATER --
-    function updateDashboard() {
-        const records = getRecords();
-        let fullCount = 0, halfCount = 0, absentCount = 0, effectiveDays = 0;
-
-        const tbody = document.getElementById('attendanceTableBody');
-        tbody.innerHTML = '';
-
-        records.forEach(item => {
-            if (item.type === 'Full Day') fullCount++;
-            else if (item.type === 'Half Day') halfCount++;
-            else if (item.type === 'Absent') absentCount++;
-
-            effectiveDays += item.multiplier;
-
-            let badgeClass = item.type === 'Full Day' ? 'badge-full' : (item.type === 'Half Day' ? 'badge-half' : 'badge-absent');
-            let itemSalary = item.multiplier * perDayRate;
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.date}</td>
-                <td><span class="badge ${badgeClass}">${item.type}</span></td>
-                <td>₹${itemSalary.toFixed(2)}</td>
-                <td>
-                    <button class="edit-btn" onclick="openEditModal('${item.date}', '${item.type}')">Edit</button>
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-
-        const totalSalary = effectiveDays * perDayRate;
-
-        document.getElementById('totalSalaryDisplay').innerText = `₹${totalSalary.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
-        document.getElementById('totalCountDisplay').innerText = records.length;
-        document.getElementById('fullDayDisplay').innerText = fullCount;
-        document.getElementById('halfDayDisplay').innerText = halfCount;
-        document.getElementById('absentDisplay').innerText = absentCount;
-    }
-
-    // Initialize
-    updateDashboard();
-</script>
-
-</body>
-</html>
+            padding: 12px
